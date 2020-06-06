@@ -19,6 +19,12 @@
     <Filter Include="Header Files\Graphics">
       <UniqueIdentifier>{4f472b14-9840-4cd7-839d-5d7d4ba007bd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Graphics\Models">
+      <UniqueIdentifier>{3aef71b6-ea59-4f70-9530-dbb388973c11}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Graphics\Models">
+      <UniqueIdentifier>{fdd372b8-ac55-4d36-9508-f2495351d695}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -36,6 +42,12 @@
     <ClCompile Include="Camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Character.cpp">
+      <Filter>Source Files\Graphics\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="DinoBird.cpp">
+      <Filter>Source Files\Graphics\Models</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stb_image.h">
@@ -52,6 +64,12 @@
     </ClInclude>
     <ClInclude Include="Camera.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Character.h">
+      <Filter>Header Files\Graphics\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="DinoBird.h">
+      <Filter>Header Files\Graphics\Models</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

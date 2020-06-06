@@ -187,7 +187,7 @@ void ObjModel::draw()
 	//    foreach vertex in face
 	//      emit vertex
 
-	for (ObjGroup* group : groups)
+	/*for (ObjGroup* group : groups)
 	{
 		this->materials[group->materialIndex]->texture->bind();
 		for (Face face : group->faces) {
@@ -203,7 +203,32 @@ void ObjModel::draw()
 			}
 			tigl::end();
 		}
+	}*/
+
+	std::vector<tigl::Vertex> vertices2;
+
+	for (ObjGroup* group : groups)
+	{
+		this->materials[group->materialIndex]->texture->bind();
+		for (Face face : group->faces) {
+			//tigl::begin(GL_TRIANGLES);
+			for (Vertex v : face.vertices) {
+
+				tigl::Vertex vert = tigl::Vertex();
+				vert.position = vertices.at(v.position);
+				vert.texcoord = texcoords.at(v.texcoord);
+
+				vert.color = glm::vec4(1, 1, 1, 1);
+				vertices2.push_back(vert);
+				//tigl::addVertex(vert);
+			}
+			//tigl::end();
+		}
+		
 	}
+
+	tigl::drawVertices(GL_TRIANGLES, vertices2);
+
 }
 
 void ObjModel::loadMaterialFile( const std::string &fileName, const std::string &dirName )
