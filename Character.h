@@ -9,13 +9,14 @@ private:
 
 public:
 	ObjModel* characterModel;
-	int size;
+	float size;
 	glm::vec3 position;
 	float rotation;
+	float rotationSpeed;
 	float speed;
-	const std::string direction;
+	std::string direction;
 
-	void createCharacter(const std::string name, int size, glm::vec3 position, float rotation, float speed, const std::string direction);
+	void createCharacter(const std::string name, float size, glm::vec3 position, float rotationSpeed, float speed, std::string direction);
 	void update();
 	void draw();
 };

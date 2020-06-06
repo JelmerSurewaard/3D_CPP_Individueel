@@ -1,11 +1,22 @@
 #pragma once
 #include "ObjModel.h"
+#include <GL/glew.h>
+#include "tigl.h"
+#include <glm/gtc/matrix_transform.hpp>
 
 class DinoBird {
 private:
 
-
 public:
 	ObjModel* characterModel;
-	int size;
+	float size;
+	glm::vec3 position;
+	float rotation;
+	float rotationSpeed;
+	float speed;
+	std::string direction;
+
+	void CreateDinoBird(const std::string name, float size, glm::vec3 position, float rotationSpeed, float speed, std::string direction);
+	void update();
+	void draw();
 };

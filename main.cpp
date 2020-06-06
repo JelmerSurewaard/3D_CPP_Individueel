@@ -5,6 +5,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include "Camera.h"
 #include "Character.h"
+#include "DinoBird.h"
 using tigl::Vertex;
 
 #pragma comment(lib, "glfw3.lib")
@@ -20,6 +21,7 @@ void update();
 void draw();
 
 Character steve;
+DinoBird bird;
 
 int main(void)
 {
@@ -63,8 +65,8 @@ void init()
 
     glEnable(GL_DEPTH_TEST);
 
-    steve.createCharacter("Steve", 1, glm::vec3(0, 0, 0), 0.01f, 0, "x");
-
+    //steve.createCharacter("Steve", 1, glm::vec3(0, 0, 0), 0, 0.01f, "y");
+    bird.CreateDinoBird("Bird", 10, glm::vec3(0, 0, 0), 0, 0, "y");
     //dinoBird = new ObjModel("models/DinoBird/DinoBird.obj");
 
 }
@@ -76,7 +78,8 @@ double lastFrameTime = .0;
 void update()
 {
 
-    steve.update();
+    //steve.update();
+    bird.update();
 
     double currentFrameTime = glfwGetTime();
     double deltaTime = currentFrameTime - lastFrameTime;
@@ -109,7 +112,8 @@ void draw()
 
     glEnable(GL_DEPTH_TEST);
     
-    steve.draw();
+    //steve.draw();
+    bird.draw();
 
     //dinoBird->draw();
 }
