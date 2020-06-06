@@ -12,14 +12,6 @@ Camera::Camera(GLFWwindow* window)
 
 glm::mat4 Camera::getMatrix()
 {
-	//glm::vec3 viewPosOrTargetPos = glm::vec3(0, 0, 0);  // Kijkt nu naar positie 0,0,0
-	//glm::mat4 viewMat = glm::lookAt(
-	//	glm::vec3(camX, 0, camZ) + viewPosOrTargetPos,
-	//	glm::vec3(0, 0, 0),
-	//	glm::vec3(0.0f, 1.0f, 0.0f));
-	//viewMat = glm::rotate(viewMat, (float)rotX, glm::vec3(1, 0, 0));
-	//viewMat = glm::translate(viewMat, glm::vec3(this->translation.x, this->translation.y, this->translation.z));
-	//return viewMat;
 	glm::mat4 ret(1.0f);
 	ret = glm::rotate(ret, rotation.x, glm::vec3(1, 0, 0));
 	ret = glm::rotate(ret, rotation.y, glm::vec3(0, 1, 0));

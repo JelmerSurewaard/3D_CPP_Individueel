@@ -62,7 +62,6 @@ void init()
     glEnable(GL_DEPTH_TEST);
 
     model = new ObjModel("models/steve/Steve.obj");
-    //model = new ObjModel("models/car/honda_jazz.obj");
 }
 
 float rotation = 0.0f;
@@ -96,7 +95,6 @@ void draw()
     glm::mat4 projection = glm::perspective(glm::radians(75.0f), viewport[2] / (float)viewport[3], 0.01f, 500.0f);
 
     tigl::shader->setProjectionMatrix(projection);
-    //tigl::shader->setViewMatrix(glm::lookAt(glm::vec3(0,30,50), glm::vec3(0,0,0), glm::vec3(0,1,0)));
     tigl::shader->setViewMatrix(camera->getMatrix());
     tigl::shader->setModelMatrix(glm::rotate(glm::mat4(1.0f), rotation, glm::vec3(0,1,0)));
 
