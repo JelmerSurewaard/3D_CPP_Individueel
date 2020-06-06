@@ -9,8 +9,6 @@
 
 class Texture;
 
-
-
 class ObjModel
 {
 private:

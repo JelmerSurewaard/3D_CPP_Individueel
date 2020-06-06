@@ -197,7 +197,7 @@ void ObjModel::draw()
 				tigl::Vertex vert = tigl::Vertex();
 				vert.position = vertices.at(v.position);
 				vert.texcoord = texcoords.at(v.texcoord);
-
+				
 				vert.color = glm::vec4(1, 1, 1, 1);
 				tigl::addVertex(vert);
 			}

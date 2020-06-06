@@ -12,6 +12,7 @@ using tigl::Vertex;
 
 GLFWwindow* window;
 ObjModel* model;
+ObjModel* dinoBird;
 
 std::shared_ptr<Camera> camera;
 
@@ -62,6 +63,8 @@ void init()
     glEnable(GL_DEPTH_TEST);
 
     model = new ObjModel("models/steve/Steve.obj");
+    dinoBird = new ObjModel("models/DinoBird/DinoBird.obj");
+
 }
 
 float rotation = 0.0f;
@@ -71,7 +74,7 @@ double lastFrameTime = .0;
 
 void update()
 {
-    rotation += 0.01f;
+    //rotation += 0.01f;
     double currentFrameTime = glfwGetTime();
     double deltaTime = currentFrameTime - lastFrameTime;
     lastFrameTime = currentFrameTime;
@@ -96,12 +99,18 @@ void draw()
 
     tigl::shader->setProjectionMatrix(projection);
     tigl::shader->setViewMatrix(camera->getMatrix());
-    tigl::shader->setModelMatrix(glm::rotate(glm::mat4(1.0f), rotation, glm::vec3(0,1,0)));
+    //tigl::shader->setModelMatrix(glm::rotate(glm::mat4(1.0f), rotation, glm::vec3(0,1,0)));
+    glm::mat4 matrix = glm::mat4(1.0f);
+    matrix = glm::scale(matrix, glm::vec3(0.00025f));
+    matrix = glm::translate(matrix, glm::vec3(0, 0, 0));
+    matrix = glm::rotate(matrix, (float)glm::radians(0.0f), glm::vec3(0, 1, 0));
+    tigl::shader->setModelMatrix(matrix);
 
     tigl::shader->enableColor(true);
     tigl::shader->enableTexture(true);
 
     glEnable(GL_DEPTH_TEST);
     
-    model->draw();
+    //model->draw();
+    dinoBird->draw();
 }
