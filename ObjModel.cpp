@@ -196,7 +196,7 @@ void ObjModel::draw()
 					tigl::Vertex vert = tigl::Vertex();
 					vert.position = vertices.at(v.position);
 					vert.texcoord = texcoords.at(v.texcoord);
-
+					vert.normal = glm::vec3(0, 1, 0);
 					vert.color = glm::vec4(1, 1, 1, 1);
 					vertices2.push_back(vert);
 				}
@@ -209,7 +209,7 @@ void ObjModel::draw()
 					tigl::Vertex vert = tigl::Vertex();
 					vert.position = vertices.at(v.position);
 					//vert.texcoord = texcoords.at(v.texcoord);
-
+					vert.normal = glm::vec3(0, 1, 0);
 					vert.color = glm::vec4(0, 1, 0, 0);
 					vertices2.push_back(vert);
 					}

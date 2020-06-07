@@ -44,15 +44,21 @@ void Camera::updateKeyInput(GLFWwindow* window)
 	if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_RELEASE)
 		speed = 1;
 	if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {
-		if (arrowUp == 0)
+		if (arrowUp == 0 && arrowDown == 0)
 		{
 			arrowUp = 100;
 		}
 	}	
 	if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) {
-		if (arrowDown == 0)
+		if (arrowDown == 0 && arrowUp == 0)
 		{
 			arrowDown = 100;
+		}
+	}
+	if (glfwGetKey(window, GLFW_KEY_L) == GLFW_PRESS) {
+		if (true)
+		{
+			this->lightning = !lightning;
 		}
 	}
 		

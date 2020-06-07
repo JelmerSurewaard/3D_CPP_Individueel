@@ -28,6 +28,7 @@ public:
 	double rotY = 0;
 	double radius = 10;
 	bool player1Cam = true;
+	bool lightning = true;
 
 	int arrowUp = 0;
 	int arrowDown = 0;

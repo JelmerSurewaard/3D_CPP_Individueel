@@ -81,11 +81,11 @@ void init()
     tigl::shader->setLightCount(1);
 
     tigl::shader->setLightDirectional(0, false);
-    tigl::shader->setLightPosition(0, glm::vec3(0, 0, 0));
+    tigl::shader->setLightPosition(0, glm::vec3(0, 5, 0));
     tigl::shader->setLightAmbient(0, glm::vec3(0.1f, 0.1f, 0.15f));
     tigl::shader->setLightDiffuse(0, glm::vec3(0.8f, 0.8f, 0.8f));
     tigl::shader->setLightSpecular(0, glm::vec3(0, 0, 0));
-    tigl::shader->setShinyness(100.0f);
+    tigl::shader->setShinyness(0.25f);
 
     camera = std::make_shared<Camera>(window);
 
@@ -114,8 +114,12 @@ double lastFrameTime = .0;
 void update()
 {
 
+    tigl::shader->enableLighting(camera->lightning);
+
     if (!collision)
     {
+        
+
         for (Object* object : objects)
         {
             if (object->name == "Road")
