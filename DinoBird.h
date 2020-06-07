@@ -12,7 +12,7 @@ public:
 	ObjModel* characterModel;
 	float size;
 	glm::vec3 position;
-	float rotation;
+	float rotation = (-0.5 * 3.14159265359);
 	float rotationSpeed;
 	float speed;
 	std::string direction;

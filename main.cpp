@@ -9,6 +9,8 @@
 #include "Cactus.h"
 #include "Road.h"
 #include "Object.h"
+#include "TextControl.h"
+#include "io.h"
 
 using tigl::Vertex;
 
@@ -23,9 +25,12 @@ std::shared_ptr<Camera> camera;
 void init();
 void update();
 void draw();
-void gameThread();
 
 std::list<Object*> objects;
+
+TextControl* textWriter;
+io fileWriter;
+int score = 0;
 
 int main(void)
 {
@@ -49,7 +54,6 @@ int main(void)
 		draw();
 		glfwSwapBuffers(window);
 		glfwPollEvents();
-        gameThread();
 	}
 
 	glfwTerminate();
@@ -70,22 +74,23 @@ void init()
 
     glEnable(GL_DEPTH_TEST);
 
-    Cactus* cactus = new Cactus();
-    cactus->createModel("Cactus", 0.25f, glm::vec3(0, 0.25f, -0.15f), 0.01f, -0.01f, "x");
+    textWriter = new TextControl("C:/Windows/Fonts/times.ttf", 20, 1920.0f, 1080.0f);
+    
     Road* road = new Road();
     road->createModel("Road", 1, glm::vec3(0, 0, 0));
     Character* player = new Character();
     player->createModel("Character", 0.25f, glm::vec3(-3.3, 0.25f, -0.15f), 0, 0, "x");
 
+    Cactus* cactus = new Cactus();
+    cactus->createModel("Cactus", 0.25f, glm::vec3(0, 0.25f, -0.15f), 0.01f, -0.01f, "x");
 
+    DinoBird* dinoBird = new DinoBird();
+    dinoBird->createModel("DinoBird", 2, glm::vec3(3, 0.75f, -0.15f), 0, -0.01f, "x");
+
+    objects.push_back(dinoBird);
     objects.push_back(player);
     objects.push_back(cactus);
     objects.push_back(road);
-
-}
-
-void gameThread() 
-{
 
 }
 
@@ -109,6 +114,11 @@ void update()
             // removes Cactus when it reaches end of the road
             if (cactus.position.x < -3.5)
             {
+                if (camera->arrowUp > 0)
+                {
+                    score++;
+                    //std::cout << "Score: " << score << std::endl;
+                }
                 objects.remove(object);
                 break;
             }
@@ -117,12 +127,60 @@ void update()
         if (object->name == "DinoBird")
         {
             DinoBird& dinoBird = dynamic_cast<DinoBird&>(*object);
+            // removes DinoBird when it reaches end of the road
+            if (dinoBird.position.x < -3.5)
+            {
+                if (camera->arrowDown > 0)
+                {
+                    score++;
+                    //std::cout << "Score: " << score << std::endl;
+                }
+                objects.remove(object);
+                break;
+            }
             dinoBird.update();
         }
         if (object->name == "Character")
         {
             Character& character = dynamic_cast<Character&>(*object);
+            // Jumps when arrowUp is pressed
+            if (camera->arrowUp > 0)
+            {
+                character.jump();
+                camera->arrowUp -= 1;
+            }
+
+            // Ducks when arrowDown is pressed
+            if (camera->arrowDown > 0)
+            {
+                character.duck();
+                camera->arrowDown -= 1;
+            }
+
+            // Stands when nothing is pressed
+            if (camera->arrowDown == 0 && camera->arrowUp == 0)
+            {
+                character.stand();
+            }
+
             character.update();
+        }
+
+        if (objects.size() < 4)
+        {
+            int random = rand() % 2 + 1;
+
+            if (random == 1)
+            {
+                Cactus* cactus = new Cactus();
+                cactus->createModel("Cactus", 0.25f, glm::vec3(3, 0.25f, -0.15f), 0.01f, -0.01f + (-0.001f * score), "x");
+                objects.push_back(cactus);
+            }
+            else {
+                DinoBird* dinoBird = new DinoBird();
+                dinoBird->createModel("DinoBird", 2, glm::vec3(3, 0.75f, -0.15f), 0, -0.01f + (-0.001f * score), "x");
+                objects.push_back(dinoBird);
+            }
         }
     }
 
@@ -177,27 +235,16 @@ void draw()
         if (object->name == "Character")
         {
             Character& character = dynamic_cast<Character&>(*object);
-            // Jumps when arrowUp is pressed
-            if (camera->arrowUp > 0)
-            {
-                character.jump();
-                camera->arrowUp -= 1;
-            }
-
-            // Ducks when arrowDown is pressed
-            if (camera->arrowDown > 0)
-            {
-                character.duck();
-                camera->arrowDown -= 1;
-            }
-           
-            if (camera->arrowDown == 0 && camera->arrowUp == 0)
-            {
-                character.stand();
-            }
-
             character.draw();
         }
     }
+
+    //Write text!
+    textWriter->setScale(5.0f);
+    std::string scoreString = std::to_string(score);
+    textWriter->drawText("Score: " + scoreString, -25, -210);
+
+    fileWriter.writeFile(scoreString);
+    
 
 }

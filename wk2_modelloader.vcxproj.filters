@@ -25,6 +25,18 @@
     <Filter Include="Header Files\Graphics\Models">
       <UniqueIdentifier>{fdd372b8-ac55-4d36-9508-f2495351d695}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Graphics\Text">
+      <UniqueIdentifier>{674ae7ea-7fbd-4f45-b68b-ad69ffdee7fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Graphics\Text">
+      <UniqueIdentifier>{d94c2f3f-c0bf-4b95-bd87-d4ef253919fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\FileIO">
+      <UniqueIdentifier>{f6124118-6cca-4ec4-b121-d155a91974fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\FileIO">
+      <UniqueIdentifier>{d612daeb-5977-48a1-a258-ab49bb224bfd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -57,15 +69,18 @@
     <ClCompile Include="Object.cpp">
       <Filter>Source Files\Graphics\Models</Filter>
     </ClCompile>
+    <ClCompile Include="TextControl.cpp">
+      <Filter>Source Files\Graphics\Text</Filter>
+    </ClCompile>
+    <ClCompile Include="io.cpp">
+      <Filter>Source Files\FileIO</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stb_image.h">
       <Filter>Header Files\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="Texture.h">
-      <Filter>Header Files\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="tigl.h">
       <Filter>Header Files\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="ObjModel.h">
@@ -89,5 +104,22 @@
     <ClInclude Include="Object.h">
       <Filter>Header Files\Graphics\Models</Filter>
     </ClInclude>
+    <ClInclude Include="tigl.h">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="TextControl.h">
+      <Filter>Header Files\Graphics\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="stb_truetype.h">
+      <Filter>Header Files\Graphics\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="io.h">
+      <Filter>Header Files\FileIO</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="score.txt">
+      <Filter>Source Files\FileIO</Filter>
+    </Text>
   </ItemGroup>
 </Project>
