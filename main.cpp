@@ -101,11 +101,14 @@ void init()
 
     Cactus* cactus = new Cactus("Cactus", 0.25f, glm::vec3(0, 0.25f, -0.15f), 0.01f, -0.01f, "x");
 
-    DinoBird* dinoBird = new DinoBird("DinoBird", 2, glm::vec3(3, 0.75f, -0.15f), 0, -0.01f, "x");
+    Cactus* cactus2 = new Cactus("Cactus", 0.25f, glm::vec3(2, 0.25f, -0.15f), 0.01f, -0.01f, "x");
+
+    DinoBird* dinoBird = new DinoBird("DinoBird", 2, glm::vec3(4, 0.75f, -0.15f), 0, -0.01f, "x");
 
     objects.push_back(dinoBird);
     objects.push_back(player);
     objects.push_back(cactus);
+    objects.push_back(cactus2);
     objects.push_back(road);
 
 }
@@ -196,7 +199,7 @@ void update()
                 character.update();
             }
 
-            if (objects.size() < 4)
+            if (objects.size() < 5)
             {
                 int random = rand() % 2 + 1;
 
