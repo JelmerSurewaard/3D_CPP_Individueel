@@ -3,8 +3,9 @@
 #include <GL/glew.h>
 #include "tigl.h"
 #include <glm/gtc/matrix_transform.hpp>
+#include "Object.h"
 
-class Character {
+class Character: public Object {
 private:
 
 public:
@@ -16,7 +17,7 @@ public:
 	float speed;
 	std::string direction;
 
-	void createCharacter(const std::string name, float size, glm::vec3 position, float rotationSpeed, float speed, std::string direction);
+	void createModel(const std::string name, float size, glm::vec3 position, float rotationSpeed, float speed, std::string direction);
 	void update();
 	void draw();
 };

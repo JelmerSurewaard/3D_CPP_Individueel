@@ -3,8 +3,9 @@
 #include <GL/glew.h>
 #include "tigl.h"
 #include <glm/gtc/matrix_transform.hpp>
+#include "Object.h"
 
-class Road {
+class Road: public Object {
 private:
 
 public:
@@ -12,7 +13,7 @@ public:
 	float size;
 	glm::vec3 position;
 
-	void createRoad(const std::string name, float size, glm::vec3 position);
+	void createModel(const std::string name, float size, glm::vec3 position);
 	void update();
 	void draw();
 };

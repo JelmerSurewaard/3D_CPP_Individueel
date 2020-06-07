@@ -54,6 +54,9 @@
     <ClCompile Include="Road.cpp">
       <Filter>Source Files\Graphics\Models</Filter>
     </ClCompile>
+    <ClCompile Include="Object.cpp">
+      <Filter>Source Files\Graphics\Models</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stb_image.h">
@@ -81,6 +84,9 @@
       <Filter>Header Files\Graphics\Models</Filter>
     </ClInclude>
     <ClInclude Include="Road.h">
+      <Filter>Header Files\Graphics\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
       <Filter>Header Files\Graphics\Models</Filter>
     </ClInclude>
   </ItemGroup>

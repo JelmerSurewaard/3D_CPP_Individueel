@@ -1,7 +1,8 @@
 #include "Road.h"
 
-void Road::createRoad(const std::string name, float size, glm::vec3 position)
+void Road::createModel(const std::string name, float size, glm::vec3 position)
 {
+	this->name = name;
 	characterModel = new ObjModel("models/road/road.obj");
 	this->size = size;
 	this->position = position;
