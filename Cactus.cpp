@@ -1,6 +1,6 @@
 #include "Cactus.h"
 
-void Cactus::createModel(const std::string name, float size, glm::vec3 position, float rotationSpeed, float speed, std::string direction)
+Cactus::Cactus(const std::string name, float size, glm::vec3 position, float rotationSpeed, float speed, std::string direction)
 {
 	this->name = name;
 	characterModel = new ObjModel("models/Cactus/cactus.obj");
@@ -9,6 +9,11 @@ void Cactus::createModel(const std::string name, float size, glm::vec3 position,
 	this->rotationSpeed = rotationSpeed;
 	this->speed = speed;
 	this->direction = direction;
+}
+
+Cactus::~Cactus()
+{
+	delete characterModel;
 }
 
 void Cactus::update()

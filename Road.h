@@ -13,7 +13,8 @@ public:
 	float size;
 	glm::vec3 position;
 
-	void createModel(const std::string name, float size, glm::vec3 position);
+	Road(const std::string name, float size, glm::vec3 position);
+	~Road();
 	void update();
 	void draw();
 };

@@ -29,7 +29,7 @@ void draw();
 std::list<Object*> objects;
 
 TextControl* textWriter;
-io fileWriter;
+io* fileWriter;
 int score = 0;
 bool collision;
 
@@ -57,7 +57,13 @@ int main(void)
 		glfwPollEvents();
 	}
 
-	glfwTerminate();
+    glfwTerminate();
+
+    delete textWriter, fileWriter, window;
+
+    for (Object* object : objects) {
+        delete(object);
+    }
 
     return 0;
 }
@@ -71,22 +77,28 @@ void init()
             glfwSetWindowShouldClose(window, true);
     });
 
+    tigl::shader->enableLighting(true);
+    tigl::shader->setLightCount(1);
+
+    tigl::shader->setLightDirectional(0, false);
+    tigl::shader->setLightPosition(0, glm::vec3(0, 0, 0));
+    tigl::shader->setLightAmbient(0, glm::vec3(0.1f, 0.1f, 0.15f));
+    tigl::shader->setLightDiffuse(0, glm::vec3(0.8f, 0.8f, 0.8f));
+    tigl::shader->setLightSpecular(0, glm::vec3(0, 0, 0));
+    tigl::shader->setShinyness(100.0f);
+
     camera = std::make_shared<Camera>(window);
 
     glEnable(GL_DEPTH_TEST);
 
     textWriter = new TextControl("C:/Windows/Fonts/times.ttf", 20, 1920.0f, 1080.0f);
     
-    Road* road = new Road();
-    road->createModel("Road", 1, glm::vec3(0, 0, 0));
-    Character* player = new Character();
-    player->createModel("Character", 0.25f, glm::vec3(-3.5, 0.25f, -0.15f), 0, 0, "x");
+    Road* road = new Road("Road", 1, glm::vec3(0, 0, 0));
+    Character* player = new Character("Character", 0.25f, glm::vec3(-3.5, 0.25f, -0.15f), 0, 0, "x");
 
-    Cactus* cactus = new Cactus();
-    cactus->createModel("Cactus", 0.25f, glm::vec3(0, 0.25f, -0.15f), 0.01f, -0.01f, "x");
+    Cactus* cactus = new Cactus("Cactus", 0.25f, glm::vec3(0, 0.25f, -0.15f), 0.01f, -0.01f, "x");
 
-    DinoBird* dinoBird = new DinoBird();
-    dinoBird->createModel("DinoBird", 2, glm::vec3(3, 0.75f, -0.15f), 0, -0.01f, "x");
+    DinoBird* dinoBird = new DinoBird("DinoBird", 2, glm::vec3(3, 0.75f, -0.15f), 0, -0.01f, "x");
 
     objects.push_back(dinoBird);
     objects.push_back(player);
@@ -126,6 +138,7 @@ void update()
                         collision = true;
                     }
                     objects.remove(object);
+                    delete(object);
                     break;
                 }
                 cactus.update();
@@ -145,6 +158,7 @@ void update()
                         collision = true;
                     }
                     objects.remove(object);
+                    delete(object);
                     break;
                 }
                 dinoBird.update();
@@ -181,13 +195,11 @@ void update()
 
                 if (random == 1)
                 {
-                    Cactus* cactus = new Cactus();
-                    cactus->createModel("Cactus", 0.25f, glm::vec3(3, 0.25f, -0.15f), 0.01f, -0.01f + (-0.001f * score), "x");
+                    Cactus* cactus = new Cactus("Cactus", 0.25f, glm::vec3(3, 0.25f, -0.15f), 0.01f, -0.01f + (-0.001f * score), "x");
                     objects.push_back(cactus);
                 }
                 else {
-                    DinoBird* dinoBird = new DinoBird();
-                    dinoBird->createModel("DinoBird", 2, glm::vec3(3, 0.75f, -0.15f), 0, -0.01f + (-0.001f * score), "x");
+                    DinoBird* dinoBird = new DinoBird("DinoBird", 2, glm::vec3(3, 0.75f, -0.15f), 0, -0.01f + (-0.001f * score), "x");
                     objects.push_back(dinoBird);
                 }
             }
@@ -251,7 +263,7 @@ void draw()
     //Write text on screen
     textWriter->setScale(5.0f);
     std::string scoreString = std::to_string(score);
-    std::string highScoreString = fileWriter.readFile();
+    std::string highScoreString = fileWriter->readFile();
     textWriter->drawText("Score: " + scoreString, -85, -210);
     textWriter->drawText("HighScore: " + highScoreString, 50, -210);
 
@@ -259,7 +271,7 @@ void draw()
 
     if (score > highScoreInt)
     {
-        fileWriter.writeFile(scoreString);
+        fileWriter->writeFile(scoreString);
     }
 
     if (collision)

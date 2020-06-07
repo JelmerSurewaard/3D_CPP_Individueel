@@ -1,6 +1,6 @@
 #include "DinoBird.h"
 
-void DinoBird::createModel(const std::string name, float size, glm::vec3 position, float rotationSpeed, float speed, std::string direction)
+DinoBird::DinoBird(const std::string name, float size, glm::vec3 position, float rotationSpeed, float speed, std::string direction)
 {
 	this->name = name;
 	characterModel = new ObjModel("models/DinoBird/DinoBirdV2.obj");
@@ -9,6 +9,11 @@ void DinoBird::createModel(const std::string name, float size, glm::vec3 positio
 	this->rotationSpeed = rotationSpeed;
 	this->speed = speed;
 	this->direction = direction;
+}
+
+DinoBird::~DinoBird()
+{
+	delete characterModel;
 }
 
 void DinoBird::update()

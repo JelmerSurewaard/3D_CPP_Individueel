@@ -19,7 +19,8 @@ public:
 	glm::mat4 matrix = glm::mat4(1.0f);
 	glm::vec3 rotationVector = glm::vec3(0,0,1);
 
-	void createModel(const std::string name, float size, glm::vec3 position, float rotationSpeed, float speed, std::string direction);
+	Character(const std::string name, float size, glm::vec3 position, float rotationSpeed, float speed, std::string direction);
+	~Character();
 	void jump();
 	void duck();
 	void stand();

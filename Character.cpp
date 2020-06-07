@@ -1,6 +1,6 @@
 #include "Character.h"
 
-	void Character::createModel(const std::string name, float size, glm::vec3 position, float rotationSpeed, float speed, std::string direction)
+	Character::Character(const std::string name, float size, glm::vec3 position, float rotationSpeed, float speed, std::string direction)
 	{
 		this->name = name;
 		characterModel = new ObjModel("models/steve/Steve.obj");
@@ -9,6 +9,11 @@
 		this->rotationSpeed = rotationSpeed;
 		this->speed = speed;
 		this->direction = direction;
+	}
+
+	Character::~Character()
+	{
+		delete characterModel;
 	}
 
 	void Character::jump()

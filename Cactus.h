@@ -17,7 +17,8 @@ public:
 	float speed;
 	std::string direction;
 
-	void createModel(const std::string name, float size, glm::vec3 position, float rotationSpeed, float speed, std::string direction);
+	Cactus(const std::string name, float size, glm::vec3 position, float rotationSpeed, float speed, std::string direction);
+	~Cactus();
 	void update();
 	void draw();
 };

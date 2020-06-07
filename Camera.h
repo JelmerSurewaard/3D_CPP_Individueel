@@ -32,8 +32,8 @@ public:
 	int arrowUp = 0;
 	int arrowDown = 0;
 private:
-	glm::vec3 position = glm::vec3(0, 0, 0);
-	glm::vec3 rotation = glm::vec3(0, 0, 0);
+	glm::vec3 position = glm::vec3(4, -1, 0);
+	glm::vec3 rotation = glm::vec3(0.5f, 0.5 * PI, 0);
 	void move(float angle, float fac);
 	int speed = 1;
 };
