@@ -31,6 +31,7 @@ std::list<Object*> objects;
 TextControl* textWriter;
 io fileWriter;
 int score = 0;
+bool collision;
 
 int main(void)
 {
@@ -50,7 +51,7 @@ int main(void)
 
 	while (!glfwWindowShouldClose(window))
 	{
-		update();
+        update();
 		draw();
 		glfwSwapBuffers(window);
 		glfwPollEvents();
@@ -79,7 +80,7 @@ void init()
     Road* road = new Road();
     road->createModel("Road", 1, glm::vec3(0, 0, 0));
     Character* player = new Character();
-    player->createModel("Character", 0.25f, glm::vec3(-3.3, 0.25f, -0.15f), 0, 0, "x");
+    player->createModel("Character", 0.25f, glm::vec3(-3.5, 0.25f, -0.15f), 0, 0, "x");
 
     Cactus* cactus = new Cactus();
     cactus->createModel("Cactus", 0.25f, glm::vec3(0, 0.25f, -0.15f), 0.01f, -0.01f, "x");
@@ -101,92 +102,97 @@ double lastFrameTime = .0;
 void update()
 {
 
-    for (Object* object : objects)
+    if (!collision)
     {
-        if (object->name == "Road")
+        for (Object* object : objects)
         {
-            Road& road = dynamic_cast<Road&>(*object);
-            road.update();
-        }
-        if (object->name == "Cactus")
-        {
-            Cactus& cactus = dynamic_cast<Cactus&>(*object);
-            // removes Cactus when it reaches end of the road
-            if (cactus.position.x < -3.5)
+            if (object->name == "Road")
             {
+                Road& road = dynamic_cast<Road&>(*object);
+                road.update();
+            }
+            if (object->name == "Cactus")
+            {
+                Cactus& cactus = dynamic_cast<Cactus&>(*object);
+                // removes Cactus when it reaches end of the road
+                if (cactus.position.x < -3.5)
+                {
+                    if (camera->arrowUp > 0)
+                    {
+                        score++;
+                        collision = false;
+                    }
+                    else {
+                        collision = true;
+                    }
+                    objects.remove(object);
+                    break;
+                }
+                cactus.update();
+            }
+            if (object->name == "DinoBird")
+            {
+                DinoBird& dinoBird = dynamic_cast<DinoBird&>(*object);
+                // removes DinoBird when it reaches end of the road
+                if (dinoBird.position.x < -3.5)
+                {
+                    if (camera->arrowDown > 0)
+                    {
+                        score++;
+                        collision = false;
+                    }
+                    else {
+                        collision = true;
+                    }
+                    objects.remove(object);
+                    break;
+                }
+                dinoBird.update();
+            }
+            if (object->name == "Character")
+            {
+                Character& character = dynamic_cast<Character&>(*object);
+                // Jumps when arrowUp is pressed
                 if (camera->arrowUp > 0)
                 {
-                    score++;
-                    //std::cout << "Score: " << score << std::endl;
+                    character.jump();
+                    camera->arrowUp -= 1;
                 }
-                objects.remove(object);
-                break;
-            }
-            cactus.update();
-        }
-        if (object->name == "DinoBird")
-        {
-            DinoBird& dinoBird = dynamic_cast<DinoBird&>(*object);
-            // removes DinoBird when it reaches end of the road
-            if (dinoBird.position.x < -3.5)
-            {
+
+                // Ducks when arrowDown is pressed
                 if (camera->arrowDown > 0)
                 {
-                    score++;
-                    //std::cout << "Score: " << score << std::endl;
+                    character.duck();
+                    camera->arrowDown -= 1;
                 }
-                objects.remove(object);
-                break;
+
+                // Stands when nothing is pressed
+                if (camera->arrowDown == 0 && camera->arrowUp == 0)
+                {
+                    character.stand();
+                }
+
+                character.update();
             }
-            dinoBird.update();
-        }
-        if (object->name == "Character")
-        {
-            Character& character = dynamic_cast<Character&>(*object);
-            // Jumps when arrowUp is pressed
-            if (camera->arrowUp > 0)
+
+            if (objects.size() < 4)
             {
-                character.jump();
-                camera->arrowUp -= 1;
-            }
+                int random = rand() % 2 + 1;
 
-            // Ducks when arrowDown is pressed
-            if (camera->arrowDown > 0)
-            {
-                character.duck();
-                camera->arrowDown -= 1;
-            }
-
-            // Stands when nothing is pressed
-            if (camera->arrowDown == 0 && camera->arrowUp == 0)
-            {
-                character.stand();
-            }
-
-            character.update();
-        }
-
-        if (objects.size() < 4)
-        {
-            int random = rand() % 2 + 1;
-
-            if (random == 1)
-            {
-                Cactus* cactus = new Cactus();
-                cactus->createModel("Cactus", 0.25f, glm::vec3(3, 0.25f, -0.15f), 0.01f, -0.01f + (-0.001f * score), "x");
-                objects.push_back(cactus);
-            }
-            else {
-                DinoBird* dinoBird = new DinoBird();
-                dinoBird->createModel("DinoBird", 2, glm::vec3(3, 0.75f, -0.15f), 0, -0.01f + (-0.001f * score), "x");
-                objects.push_back(dinoBird);
+                if (random == 1)
+                {
+                    Cactus* cactus = new Cactus();
+                    cactus->createModel("Cactus", 0.25f, glm::vec3(3, 0.25f, -0.15f), 0.01f, -0.01f + (-0.001f * score), "x");
+                    objects.push_back(cactus);
+                }
+                else {
+                    DinoBird* dinoBird = new DinoBird();
+                    dinoBird->createModel("DinoBird", 2, glm::vec3(3, 0.75f, -0.15f), 0, -0.01f + (-0.001f * score), "x");
+                    objects.push_back(dinoBird);
+                }
             }
         }
     }
-
-   
-
-
 
     double currentFrameTime = glfwGetTime();
     double deltaTime = currentFrameTime - lastFrameTime;
@@ -212,7 +218,6 @@ void draw()
 
     tigl::shader->setProjectionMatrix(projection);
     tigl::shader->setViewMatrix(camera->getMatrix());
-    //tigl::shader->setModelMatrix(glm::rotate(glm::mat4(1.0f), rotation, glm::vec3(0,1,0)));
 
     tigl::shader->enableColor(true);
     tigl::shader->enableTexture(true);
@@ -255,5 +260,10 @@ void draw()
     if (score > highScoreInt)
     {
         fileWriter.writeFile(scoreString);
+    }
+
+    if (collision)
+    {
+        textWriter->drawText("You are Dead, try harder next time!", -210, 0);
     }
 }
