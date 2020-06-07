@@ -87,6 +87,9 @@ void init()
     tigl::shader->setLightSpecular(0, glm::vec3(0, 0, 0));
     tigl::shader->setShinyness(0.25f);
 
+    tigl::shader->enableFog(true);
+    tigl::shader->setFogExp(0.1f);
+
     camera = std::make_shared<Camera>(window);
 
     glEnable(GL_DEPTH_TEST);
