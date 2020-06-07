@@ -180,54 +180,46 @@ ObjModel::~ObjModel(void)
 
 void ObjModel::draw()
 {
-	//foreach group in groups
-	//  set material texture, if available
-	//  set material color, if available
-	//  foreach face in group
-	//    foreach vertex in face
-	//      emit vertex
-
-	/*for (ObjGroup* group : groups)
-	{
-		this->materials[group->materialIndex]->texture->bind();
-		for (Face face : group->faces) {
-			tigl::begin(GL_TRIANGLES);
-			for (Vertex v : face.vertices) {
-
-				tigl::Vertex vert = tigl::Vertex();
-				vert.position = vertices.at(v.position);
-				vert.texcoord = texcoords.at(v.texcoord);
-				
-				vert.color = glm::vec4(1, 1, 1, 1);
-				tigl::addVertex(vert);
-			}
-			tigl::end();
-		}
-	}*/
 
 	std::vector<tigl::Vertex> vertices2;
 
+	// Draw when object has texture
+
 	for (ObjGroup* group : groups)
 	{
-		this->materials[group->materialIndex]->texture->bind();
-		for (Face face : group->faces) {
-			//tigl::begin(GL_TRIANGLES);
-			for (Vertex v : face.vertices) {
+		if (this->materials[group->materialIndex]->texture != NULL)
+		{
+			this->materials[group->materialIndex]->texture->bind();
+			for (Face face : group->faces) {
+				for (Vertex v : face.vertices) {
 
-				tigl::Vertex vert = tigl::Vertex();
-				vert.position = vertices.at(v.position);
-				vert.texcoord = texcoords.at(v.texcoord);
+					tigl::Vertex vert = tigl::Vertex();
+					vert.position = vertices.at(v.position);
+					vert.texcoord = texcoords.at(v.texcoord);
 
-				vert.color = glm::vec4(1, 1, 1, 1);
-				vertices2.push_back(vert);
-				//tigl::addVertex(vert);
+					vert.color = glm::vec4(1, 1, 1, 1);
+					vertices2.push_back(vert);
+				}
 			}
-			//tigl::end();
-		}
-		
-	}
+			// Draw when object has no texture
+		} else{
+			for (Face face : group->faces) {
+				for (Vertex v : face.vertices) {
 
+					tigl::Vertex vert = tigl::Vertex();
+					vert.position = vertices.at(v.position);
+					//vert.texcoord = texcoords.at(v.texcoord);
+
+					vert.color = glm::vec4(0, 1, 0, 0);
+					vertices2.push_back(vert);
+					}
+				}
+		}
+	}
+	
 	tigl::drawVertices(GL_TRIANGLES, vertices2);
+
+
 
 }
 

@@ -14,9 +14,9 @@
 	void Character::update()
 	{
 		rotation += rotationSpeed;
-		// update direction
 
 		if (direction == "x")
+
 		{
 			position = glm::vec3(position.x + (1 * speed), position.y, position.z);
 		}

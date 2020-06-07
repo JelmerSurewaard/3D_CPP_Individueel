@@ -6,6 +6,8 @@
 #include "Camera.h"
 #include "Character.h"
 #include "DinoBird.h"
+#include "Cactus.h"
+#include "Road.h"
 using tigl::Vertex;
 
 #pragma comment(lib, "glfw3.lib")
@@ -22,6 +24,8 @@ void draw();
 
 Character steve;
 DinoBird bird;
+Cactus cactus;
+Road road;
 
 int main(void)
 {
@@ -66,8 +70,9 @@ void init()
     glEnable(GL_DEPTH_TEST);
 
     //steve.createCharacter("Steve", 1, glm::vec3(0, 0, 0), 0, 0.01f, "y");
-    bird.CreateDinoBird("Bird", 10, glm::vec3(0, 0, 0), 0, 0, "y");
-    //dinoBird = new ObjModel("models/DinoBird/DinoBird.obj");
+    //bird.CreateDinoBird("Bird", 10, glm::vec3(0, 0, 0), 0, 0, "y");
+    cactus.createCactus("Cactus", 1, glm::vec3(0, 0.25f, -0.50f), 0, 0, "y");
+    road.createRoad("Road", 1, glm::vec3(0, 0, 0));
 
 }
 
@@ -79,7 +84,9 @@ void update()
 {
 
     //steve.update();
-    bird.update();
+    cactus.update();
+    road.update();
+    
 
     double currentFrameTime = glfwGetTime();
     double deltaTime = currentFrameTime - lastFrameTime;
@@ -113,7 +120,8 @@ void draw()
     glEnable(GL_DEPTH_TEST);
     
     //steve.draw();
-    bird.draw();
+    cactus.draw();
+    road.draw();
 
     //dinoBird->draw();
 }

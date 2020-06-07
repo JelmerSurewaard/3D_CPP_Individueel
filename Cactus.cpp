@@ -1,9 +1,9 @@
-#include "DinoBird.h"
+#include "Cactus.h"
 
-void DinoBird::CreateDinoBird(const std::string name, float size, glm::vec3 position, float rotationSpeed, float speed, std::string direction)
+void Cactus::createCactus(const std::string name, float size, glm::vec3 position, float rotationSpeed, float speed, std::string direction)
 {
 
-	characterModel = new ObjModel("models/DinoBird/DinoBirdV2.obj");
+	characterModel = new ObjModel("models/Cactus/cactus.obj");
 	this->size = size;
 	this->position = position;
 	this->rotationSpeed = rotationSpeed;
@@ -11,11 +11,12 @@ void DinoBird::CreateDinoBird(const std::string name, float size, glm::vec3 posi
 	this->direction = direction;
 }
 
-void DinoBird::update()
+void Cactus::update()
 {
 	rotation += rotationSpeed;
 
 	if (direction == "x")
+
 	{
 		position = glm::vec3(position.x + (1 * speed), position.y, position.z);
 	}
@@ -30,7 +31,7 @@ void DinoBird::update()
 
 }
 
-void DinoBird::draw()
+void Cactus::draw()
 {
 	glm::mat4 matrix = glm::mat4(1.0f);
 	matrix = glm::translate(matrix, position);
