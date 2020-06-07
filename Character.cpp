@@ -11,12 +11,28 @@
 		this->direction = direction;
 	}
 
+	void Character::jump()
+	{
+		position.y = 0.65f;
+	}
+
+	void Character::duck()
+	{
+		rotationVector = glm::vec3(0, 0, 1);
+		rotation = 0.9f;
+	}
+
+	void Character::stand()
+	{
+		position.y = 0.25f;
+		rotation = 0;
+	}
+
 	void Character::update()
 	{
 		rotation += rotationSpeed;
 
 		if (direction == "x")
-
 		{
 			position = glm::vec3(position.x + (1 * speed), position.y, position.z);
 		}
@@ -35,7 +51,7 @@
 	{
 		glm::mat4 matrix = glm::mat4(1.0f);
 		matrix = glm::translate(matrix, position);
-		matrix = glm::rotate(matrix, rotation, glm::vec3(0, 1, 0));
+		matrix = glm::rotate(matrix, rotation, rotationVector);
 		matrix = glm::scale(matrix, glm::vec3((0.25f) * size));
 
 		tigl::shader->setModelMatrix(matrix);

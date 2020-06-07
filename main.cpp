@@ -23,6 +23,7 @@ std::shared_ptr<Camera> camera;
 void init();
 void update();
 void draw();
+void gameThread();
 
 std::list<Object*> objects;
 
@@ -48,6 +49,7 @@ int main(void)
 		draw();
 		glfwSwapBuffers(window);
 		glfwPollEvents();
+        gameThread();
 	}
 
 	glfwTerminate();
@@ -68,15 +70,22 @@ void init()
 
     glEnable(GL_DEPTH_TEST);
 
-    //steve.createCharacter("Steve", 1, glm::vec3(0, 0, 0), 0, 0.01f, "y");
-    //bird.CreateDinoBird("Bird", 10, glm::vec3(0, 0, 0), 0, 0, "y");
-
     Cactus* cactus = new Cactus();
-    cactus->createModel("Cactus", 1, glm::vec3(0, 0.25f, -0.50f), 0, 0.005f, "x");
+    cactus->createModel("Cactus", 0.25f, glm::vec3(0, 0.25f, -0.15f), 0.01f, -0.01f, "x");
     Road* road = new Road();
     road->createModel("Road", 1, glm::vec3(0, 0, 0));
+    Character* player = new Character();
+    player->createModel("Character", 0.25f, glm::vec3(-3.3, 0.25f, -0.15f), 0, 0, "x");
+
+
+    objects.push_back(player);
     objects.push_back(cactus);
     objects.push_back(road);
+
+}
+
+void gameThread() 
+{
 
 }
 
@@ -97,14 +106,25 @@ void update()
         if (object->name == "Cactus")
         {
             Cactus& cactus = dynamic_cast<Cactus&>(*object);
+            // removes Cactus when it reaches end of the road
+            if (cactus.position.x < -3.5)
+            {
+                objects.remove(object);
+                break;
+            }
             cactus.update();
         }
-
-        
+        if (object->name == "DinoBird")
+        {
+            DinoBird& dinoBird = dynamic_cast<DinoBird&>(*object);
+            dinoBird.update();
+        }
+        if (object->name == "Character")
+        {
+            Character& character = dynamic_cast<Character&>(*object);
+            character.update();
+        }
     }
-
-    
-    
 
     double currentFrameTime = glfwGetTime();
     double deltaTime = currentFrameTime - lastFrameTime;
@@ -149,8 +169,35 @@ void draw()
             Cactus& cactus = dynamic_cast<Cactus&>(*object);
             cactus.draw();
         }
+        if (object->name == "DinoBird")
+        {
+            DinoBird& dinoBird = dynamic_cast<DinoBird&>(*object);
+            dinoBird.draw();
+        }
+        if (object->name == "Character")
+        {
+            Character& character = dynamic_cast<Character&>(*object);
+            // Jumps when arrowUp is pressed
+            if (camera->arrowUp > 0)
+            {
+                character.jump();
+                camera->arrowUp -= 1;
+            }
 
-        //object.update();
+            // Ducks when arrowDown is pressed
+            if (camera->arrowDown > 0)
+            {
+                character.duck();
+                camera->arrowDown -= 1;
+            }
+           
+            if (camera->arrowDown == 0 && camera->arrowUp == 0)
+            {
+                character.stand();
+            }
+
+            character.draw();
+        }
     }
 
 }

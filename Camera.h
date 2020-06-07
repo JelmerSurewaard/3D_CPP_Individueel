@@ -28,6 +28,9 @@ public:
 	double rotY = 0;
 	double radius = 10;
 	bool player1Cam = true;
+
+	int arrowUp = 0;
+	int arrowDown = 0;
 private:
 	glm::vec3 position = glm::vec3(0, 0, 0);
 	glm::vec3 rotation = glm::vec3(0, 0, 0);
