@@ -18,7 +18,7 @@ std::string io::readFile()
     {
         while (getline(myfile, line))
         {
-            std::cout << line << '\n';
+            //std::cout << line << '\n';
         }
         myfile.close();
     }

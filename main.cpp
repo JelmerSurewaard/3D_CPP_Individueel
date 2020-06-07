@@ -184,6 +184,10 @@ void update()
         }
     }
 
+   
+
+
+
     double currentFrameTime = glfwGetTime();
     double deltaTime = currentFrameTime - lastFrameTime;
     lastFrameTime = currentFrameTime;
@@ -239,12 +243,17 @@ void draw()
         }
     }
 
-    //Write text!
+    //Write text on screen
     textWriter->setScale(5.0f);
     std::string scoreString = std::to_string(score);
-    textWriter->drawText("Score: " + scoreString, -25, -210);
+    std::string highScoreString = fileWriter.readFile();
+    textWriter->drawText("Score: " + scoreString, -85, -210);
+    textWriter->drawText("HighScore: " + highScoreString, 50, -210);
 
-    fileWriter.writeFile(scoreString);
-    
+    int highScoreInt =  std::stoi(highScoreString, nullptr, 0);
 
+    if (score > highScoreInt)
+    {
+        fileWriter.writeFile(scoreString);
+    }
 }
